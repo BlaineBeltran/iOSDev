@@ -16,6 +16,7 @@ class ReminderListDataSource: NSObject {
         case all
         
         func shouldInclude(date: Date) -> Bool {
+            
             let isInToday = Locale.current.calendar.isDateInToday(date)
             switch self {
             case .today:
@@ -31,28 +32,34 @@ class ReminderListDataSource: NSObject {
     var filter: Filter = .today
     
     var filteredReminders: [Reminder] {
+        
         return Reminder.testData.filter { filter.shouldInclude(date: $0.dueDate) }.sorted { $0.dueDate < $1.dueDate }
     }
     
     func update(_ reminder: Reminder, at row: Int) {
+        
         Reminder.testData[row] = reminder
     }
     
     func reminder(at row: Int) -> Reminder {
+        
         return filteredReminders[row]
     }
     
     func add(_ reminder: Reminder) {
+        
         Reminder.testData.insert(reminder, at: 0)
     }
 }
 
 extension ReminderListDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return filteredReminders.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.reminderCellIdentifier, for: indexPath) as? ReminderListCell else {
             fatalError("Could not dequeue Reminder cell")
         }
@@ -72,6 +79,7 @@ extension ReminderListDataSource: UITableViewDataSource {
 extension Reminder {
     
     static let timeFormatter: DateFormatter = {
+        
         let timeFormatter = DateFormatter()
         timeFormatter.dateStyle = .none
         timeFormatter.timeStyle = .short
@@ -79,6 +87,7 @@ extension Reminder {
     }()
     
     static let futureDateFormatter: DateFormatter = {
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
@@ -86,6 +95,7 @@ extension Reminder {
     }()
     
     static let todayDateFormatter: DateFormatter = {
+        
         let format = NSLocalizedString("'Today at '%@", comment: "format string for dates occuring today")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = String(format: format, "hh:mm a")
@@ -93,6 +103,7 @@ extension Reminder {
     }()
     
     func dueDateTimeText(for filter: ReminderListDataSource.Filter) -> String {
+        
         let isInToday = Locale.current.calendar.isDateInToday(dueDate)
         switch filter {
         case .today:

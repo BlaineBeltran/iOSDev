@@ -8,6 +8,7 @@
 import Foundation
 
 struct Reminder {
+    
     var title: String
     var dueDate: Date
     var notes: String? = nil
@@ -15,6 +16,7 @@ struct Reminder {
 }
 
 extension Reminder {
+    
     static var testData = [
         Reminder(title: "Create Jira Board", dueDate: Date().addingTimeInterval(800.0), notes: "Don't forget to integrate GitHub", isComplete: true),
         Reminder(title: "Apply to Apple", dueDate: Date().addingTimeInterval(14000.0), notes: "Update iOS Resume"),

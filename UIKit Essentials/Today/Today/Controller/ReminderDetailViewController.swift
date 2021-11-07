@@ -8,6 +8,7 @@
 import UIKit
 
 class ReminderDetailViewControler: UITableViewController {
+    
     typealias ReminderChangeAction = (Reminder) -> Void
     
     private var reminder: Reminder?
@@ -18,6 +19,7 @@ class ReminderDetailViewControler: UITableViewController {
     private var isNew = false
     
     func configure(with reminder: Reminder, isNew: Bool = false, addAction: ReminderChangeAction? = nil, editAction: ReminderChangeAction? = nil) {
+        
         self.reminder = reminder
         self.isNew = isNew
         self.reminderAddAction = addAction
@@ -28,7 +30,9 @@ class ReminderDetailViewControler: UITableViewController {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         setEditing(isNew, animated: false)
         navigationItem.setRightBarButton(editButtonItem, animated: false)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReminderDetailEditDataSource.dateLabelCellIdentifier)
@@ -44,6 +48,7 @@ class ReminderDetailViewControler: UITableViewController {
     }
     
     fileprivate func transitionToViewMode(_ reminder: Reminder) {
+        
         if isNew {
             let addReminder = tempReminder ?? reminder
             dismiss(animated: true) {
@@ -66,16 +71,17 @@ class ReminderDetailViewControler: UITableViewController {
     }
     
     fileprivate func transitionToEditMode(_ reminder: Reminder) {
+        
         dataSource = ReminderDetailEditDataSource(reminder: reminder) { reminder in
             self.tempReminder = reminder
             self.editButtonItem.isEnabled = true
-            
         }
         navigationItem.title = isNew ? NSLocalizedString("Add Reminder", comment: "add new nav title") : NSLocalizedString("Edit Reminder", comment: "edit reminder nav title")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTriggered))
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
+        
         super.setEditing(editing, animated: animated)
         
         guard let reminder = reminder else {
@@ -91,6 +97,7 @@ class ReminderDetailViewControler: UITableViewController {
     }
     
     @objc func cancelButtonTriggered() {
+        
         setEditing(false, animated: true)
         
         if isNew {

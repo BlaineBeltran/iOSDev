@@ -15,11 +15,13 @@ class EditNotesCell: UITableViewCell {
     private var notesChangeAction: NotesChangeAction?
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         notesTextView.delegate = self
     }
     
     func configure(notes: String?, changeAction: NotesChangeAction?) {
+        
         self.notesChangeAction = changeAction
         notesTextView.text = notes
     }
@@ -27,6 +29,7 @@ class EditNotesCell: UITableViewCell {
 
 extension EditNotesCell: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
         if let originalText = textView.text {
             let title = (originalText as NSString).replacingCharacters(in: range, with: text)
             notesChangeAction?(title)

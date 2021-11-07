@@ -11,9 +11,9 @@ class ReminderListViewController: UITableViewController {
     
     @IBOutlet var filterSegmenteedControl: UISegmentedControl!
     
-    
     private var reminderListDataSource: ReminderListDataSource?
     private var filter: ReminderListDataSource.Filter {
+        
         return ReminderListDataSource.Filter(rawValue: filterSegmenteedControl.selectedSegmentIndex) ?? .today
     }
     
@@ -42,6 +42,7 @@ class ReminderListViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
         
         if let navigationController = navigationController, navigationController.isToolbarHidden {
